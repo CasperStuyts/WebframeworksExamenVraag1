@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <title>Products</title>
+  <!--link rel='stylesheet' href='stylesheets/bootstrap.min.css'-->
+</head>
+<body>
+  <h1>All products</h1>
+ <br/><br/>
+  <ul>
+  <% products.forEach(function(product) {%>
+    <li>
+      <span><b>Naam : </b><%= product.Naam %></span><br />
+      <span><b>GeboorteDatum : </b><%= product.GeboorteDatum %></span><br />
+      <span><b>Studierichting : </b><%= product.Studierichting %></span><br />
+      
+    </li>
+  <% }) %>
+  </ul>
+<br />
+
+<a href='/form/add'>Add product</a>&nbsp;&nbsp;<a href='/form/search'>Search product</a>
+
+</body>
+</html>
