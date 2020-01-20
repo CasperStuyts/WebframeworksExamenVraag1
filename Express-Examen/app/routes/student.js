@@ -23,7 +23,9 @@ router.get("/add",(req,res)=>{
 })
 
 router.post('/add',(req,res)=>{
-  var query = {Name:req.body.Naam}
+  var query = {Naam:req.body.Naam,
+    GeboorteDatum:req.body.GeboorteDatum,
+    Studierichting:req.body.Studierichting}
   db.collection('students').find(query).toArray((err,result)=>{
     
     if (err) return
@@ -38,21 +40,5 @@ router.post('/add',(req,res)=>{
   
   })
 })
-/* SEARCH A PRODUCT */
-router.get("/search",(req,res)=>{
-  res.render('search.ejs',{})
-})
 
-router.post('/search',(req,res)=>{
-  var query = {Name:req.body.Name}
-  
-  db.collection('items').find(query).toArray((err,result)=>{
-   
-    if (err) return
-    if(result=='')
-    res.render('notfound.ejs',{})
-    else
-    return true;
-  })
-})
 module.exports = router;
