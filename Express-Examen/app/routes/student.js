@@ -10,7 +10,12 @@ MongoClient.connect('mongodb://localhost:27017', (err, database) => {
 
 /* GET ALL PRODUCTS */
 router.get('/', (req, res) => {
-  res.redirect('/student/add')
+  mysort = {Naam:1}
+  db.collection('students').find().sort(mysort).toArray((err, result) => {
+ 
+    if (err) return
+    res.render('list.ejs', { products: result })
+  })
 })
 /* ADD A PRODUCT */
 router.get("/add",(req,res)=>{
@@ -18,9 +23,19 @@ router.get("/add",(req,res)=>{
 })
 
 router.post('/add',(req,res)=>{
-  db.collection('students').insertOne(req.body,(err,result)=>{
+  var query = {Name:req.body.Naam}
+  db.collection('students').find(query).toArray((err,result)=>{
+    
     if (err) return
-    res.redirect('/')
+    if(result==''){
+      db.collection('students').insertOne(req.body,(err,result)=>{
+      if (err) return
+      res.redirect('/')
+    })
+  }
+    else
+    res.send("Already exists!")
+  
   })
 })
 /* SEARCH A PRODUCT */
@@ -37,7 +52,7 @@ router.post('/search',(req,res)=>{
     if(result=='')
     res.render('notfound.ejs',{})
     else
-    res.render('searchresults.ejs', { product: result[0] })
+    return true;
   })
 })
 module.exports = router;
